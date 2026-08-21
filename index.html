@@ -1204,7 +1204,48 @@ const properties = [
 ];
 
 
+/* =========================================================
+   TOAST
+========================================================= */
 
+let toastTimer;
+
+function showToast(
+  message,
+  type = "success",
+  duration = 3000
+) {
+
+  const toast =
+    $("#toast");
+
+
+  clearTimeout(
+    toastTimer
+  );
+
+
+  toast.textContent =
+    message;
+
+
+  toast.className =
+    `toast ${type} show`;
+
+
+  toastTimer =
+    setTimeout(
+      () => {
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      duration
+    );
+
+}
 /* ============================================================
    FORM SUBMIT
 ============================================================ */

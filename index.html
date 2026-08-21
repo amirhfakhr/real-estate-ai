@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ملک ایده‌آل شما</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section id="search" class="view active">
+  <div class="hero"></div><div class="shade"></div>
+  <div class="search-wrap">
+    <div class="copy">
+      <span>جستجوی ملک</span>
+      <h1>چند لحظه تا پیدا کردن<br><b>ملک ایده‌آل خود</b><br>فاصله دارید</h1>
+      <p>مشخصات موردنظرتان را وارد کنید تا گزینه‌های مناسب برای شما پیدا و مقایسه شوند.</p>
+    </div>
+
+    <form id="form" class="form">
+      <div class="form-head"><div><small>شروع جستجو</small><h2>مشخصات ملک</h2></div><em>۱ / ۱</em></div>
+      <div class="grid">
+        <label>نام و نام خانوادگی *<input name="name" placeholder="مثلاً امیر احمدی" required></label>
+        <label>شماره تماس *<input name="phone" inputmode="tel" placeholder="۰۹۱۲..." required></label>
+        <label>استان *<select id="province" name="province" required><option value="">انتخاب استان</option><option>تهران</option><option>اصفهان</option><option>فارس</option><option>خراسان رضوی</option><option>کرمان</option><option>البرز</option></select></label>
+        <label>شهر *<select id="city" name="city" required disabled><option>ابتدا استان را انتخاب کنید</option></select></label>
+        <label class="full">منطقه یا محله موردنظر<input name="area_name" placeholder="مثلاً الهیه، زعفرانیه، ولنجک"></label>
+        <label>هدف خرید<select name="purpose"><option value="living">سکونت</option><option value="investment">سرمایه‌گذاری</option><option value="rental">اجاره دادن</option></select></label>
+        <div><span class="label">نوع ملک</span><div class="seg"><label><input name="property_type" value="apartment" type="radio" checked><span>آپارتمان</span></label><label><input name="property_type" value="villa" type="radio"><span>ویلایی</span></label></div></div>
+        <label>متراژ موردنظر<div class="range"><input name="min_area" type="number" placeholder="از"><b>تا</b><input name="max_area" type="number" placeholder="تا"></div></label>
+        <label>بودجه (تومان)<div class="range"><input name="min_budget" type="number" placeholder="حداقل"><b>تا</b><input name="max_budget" type="number" placeholder="حداکثر"></div></label>
+        <label class="full">نیازها و امکانات مهم<textarea name="requirements" rows="3" placeholder="مثلاً پارکینگ، آسانسور، نورگیر، ۲ خواب و..."></textarea></label>
+      </div>
+      <button class="primary">پیدا کردن ملک مناسب <b>←</b></button>
+      <small class="note">اطلاعات شما برای جستجو و مقایسه گزینه‌ها استفاده می‌شود.</small>
+    </form>
+  </div>
+</section>
+
+<section id="loading" class="view loading">
+  <div class="loading-card">
+    <div class="spinner"></div><span>در حال جستجو</span>
+    <h1>بهترین گزینه‌ها را برای شما پیدا می‌کنیم</h1>
+    <p id="msg">در حال بررسی فایل‌های موجود...</p>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="meta"><span id="stage">در حال آماده‌سازی</span><b id="pct">0%</b></div>
+    <small>لطفاً صفحه را نبندید.</small>
+  </div>
+</section>
+
+<section id="results" class="view results">
+  <header class="results-head"><div><span>نتیجه جستجو</span><h1>گزینه‌های مناسب شما</h1><p><b>۱۲</b> ملک بر اساس معیارهای شما پیدا شد.</p></div><button id="newSearch">جستجوی جدید</button></header>
+  <main class="results-main">
+    <div class="section-head"><div><small>پیشنهاد اول</small><h2>بیشترین تطابق با نیاز شما</h2></div><strong class="score">92<small>/100</small></strong></div>
+
+    <article class="featured">
+      <div class="photo" id="featuredPhoto">
+        <img id="featuredImg" alt="تصویر ملک">
+        <button class="nav prev">‹</button><button class="nav next">›</button>
+        <span class="counter" id="featuredCounter"></span><b class="match">92٪ تطابق</b>
+      </div>
+      <div class="featured-body">
+        <small>آگهی نمونه · به‌روزرسانی امروز</small>
+        <h3>آپارتمان مدرن ۱۲۵ متری در الهیه</h3><p>تهران · الهیه</p>
+        <div class="stats"><div><b>۱۵</b><small>میلیارد تومان</small></div><div><b>۱۲۵</b><small>متر</small></div><div><b>۳</b><small>سال ساخت</small></div><div><b>۲</b><small>خواب</small></div></div>
+        <div class="scores"><div>تطابق موقعیت <b>95%</b><i><em style="width:95%"></em></i></div><div>تطابق بودجه <b>90%</b><i><em style="width:90%"></em></i></div><div>تطابق متراژ <b>96%</b><i><em style="width:96%"></em></i></div></div>
+        <div class="summary"><b>چرا پیشنهاد شده؟</b><p>این گزینه از نظر موقعیت، متراژ و بودجه بیشترین تطابق را با نیاز شما دارد و قیمت هر متر آن در محدوده قابل‌قبولی قرار گرفته است.</p></div>
+        <div class="pros"><b>✓ مزایا</b> موقعیت عالی · پارکینگ · آسانسور · نورگیر خوب<br><b>! نکته</b> سن بنا کمی بیشتر از گزینه دوم است.</div>
+        <a href="#" class="link">مشاهده آگهی اصلی ↗</a>
+      </div>
+    </article>
+
+    <div class="section-head lower"><div><small>مقایسه</small><h2>گزینه‌های برتر</h2></div><span>بر اساس امتیاز تطابق</span></div>
+    <div id="cards" class="cards"></div>
+  </main>
+</section>
+
+<script>
+const cities={تهران:["تهران","کرج","شهریار","پردیس"],اصفهان:["اصفهان","کاشان","خمینی‌شهر"],فارس:["شیراز","مرودشت","جهرم"],"خراسان رضوی":["مشهد","نیشابور","سبزوار"],کرمان:["کرمان","رفسنجان","سیرجان"],البرز:["کرج","نظرآباد","هشتگرد"]};
+const properties=[
+{score:88,title:"آپارتمان ۱۱۸ متری نوساز",loc:"تهران · زعفرانیه",price:"۱۴.۲ میلیارد",area:"۱۱۸",age:"۱ سال",rooms:"۲ خواب",images:["https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1200&q=85"]},
+{score:84,title:"آپارتمان ۱۳۰ متری لوکس",loc:"تهران · ولنجک",price:"۱۵ میلیارد",area:"۱۳۰",age:"۴ سال",rooms:"۳ خواب",images:["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85"]},
+{score:81,title:"آپارتمان ۱۲۲ متری خوش‌نقشه",loc:"تهران · نیاوران",price:"۱۳.۴ میلیارد",area:"۱۲۲",age:"۶ سال",rooms:"۲ خواب",images:["https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85"]}];
+
+const $=s=>document.querySelector(s);
+function show(id){document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("#"+id).classList.add("active");scrollTo(0,0)}
+$("#province").onchange=e=>{const c=$("#city");c.innerHTML="<option value=''>انتخاب شهر</option>";c.disabled=!e.target.value;(cities[e.target.value]||[]).forEach(x=>c.insertAdjacentHTML("beforeend",`<option>${x}</option>`))};
+
+$("#form").onsubmit=e=>{
+ e.preventDefault(); console.log("JSON:",Object.fromEntries(new FormData(e.target).entries()));show("loading");
+ let p=0,n=0, msgs=["در حال بررسی فایل‌های موجود...","در حال مقایسه گزینه‌ها با نیاز شما...","در حال رتبه‌بندی بهترین ملک‌ها...","در حال آماده‌سازی نتیجه..."];
+ const t=setInterval(()=>{p=Math.min(100,p+Math.floor(Math.random()*12)+7);$("#bar").style.width=p+"%";$("#pct").textContent=p+"%";$("#stage").textContent=p<100?"در حال پردازش...":"نتایج آماده شد";let k=Math.min(3,Math.floor(p/27));if(k!==n){n=k;$("#msg").textContent=msgs[k]}if(p===100){clearInterval(t);setTimeout(()=>{render();show("results")},650)}},500)
+};
+
+function carousel(container,images){
+ let i=0,img=container.querySelector("img"),counter=container.querySelector(".counter"),dots=container.querySelectorAll(".dots i");
+ const update=()=>{img.src=images[i];if(counter)counter.textContent=`${i+1} / ${images.length}`;dots.forEach((d,j)=>d.classList.toggle("on",j===i))};
+ container.querySelector(".prev").onclick=()=>{i=(i-1+images.length)%images.length;update()};
+ container.querySelector(".next").onclick=()=>{i=(i+1)%images.length;update()};
+ let sx=0;container.addEventListener("touchstart",e=>sx=e.changedTouches[0].clientX,{passive:true});container.addEventListener("touchend",e=>{let d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>45){i=d>0?(i-1+images.length)%images.length:(i+1)%images.length;update()}},{passive:true});update()
+}
+function render(){
+ let featured=["https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=90","https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=90","https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1400&q=90"];
+ const f=$("#featuredPhoto");f.dataset.images=JSON.stringify(featured);carousel(f,featured);
+ $("#cards").innerHTML=properties.map((x,i)=>`<article class="card"><div class="photo"><img alt="${x.title}"><button class="nav prev">‹</button><button class="nav next">›</button><span class="counter"></span><b class="smallscore">${x.score}/100</b><div class="dots">${x.images.map((_,j)=>`<i class="${j?"":"on"}"></i>`).join("")}</div></div><div class="cardbody"><small>#${i+2}</small><h3>${x.title}</h3><p>${x.loc}</p><div class="mini"><span>${x.area} متر</span><span>${x.rooms}</span><span>${x.age}</span></div><b>${x.price} تومان</b></div></article>`).join("");
+ document.querySelectorAll(".card").forEach((c,i)=>carousel(c.querySelector(".photo"),properties[i].images))
+}
+$("#newSearch").onclick=()=>show("search");
+</script>
+</body>
+</html>

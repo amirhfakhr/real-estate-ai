@@ -1256,14 +1256,23 @@ form.addEventListener(
 
     event.preventDefault();
 
-    const formData = new FormData(form);
 
-    const data = Object.fromEntries(
-      formData.entries()
-    );
+    /* ========================================================
+       COLLECT FORM DATA
+    ======================================================== */
+
+    const formData =
+      new FormData(form);
+
+    const data =
+      Object.fromEntries(
+        formData.entries()
+      );
 
 
-    // تبدیل مقادیر عددی
+    /* ========================================================
+       CONVERT NUMBERS
+    ======================================================== */
 
     data.min_area =
       data.min_area
@@ -1286,7 +1295,9 @@ form.addEventListener(
         : null;
 
 
-    // تبدیل requirements به آرایه
+    /* ========================================================
+       CONVERT REQUIREMENTS
+    ======================================================== */
 
     data.requirements =
       data.requirements
@@ -1297,27 +1308,61 @@ form.addEventListener(
         : [];
 
 
-    console.log("SENDING DATA:");
+    /* ========================================================
+       DEBUG
+    ======================================================== */
+
+    console.log(
+      "SENDING DATA:"
+    );
+
     console.log(data);
 
 
+    /* ========================================================
+       SEND TO FASTAPI
+    ======================================================== */
+
     try {
 
-      const response = await fetch(
-        "http://127.0.0.1:8000/search",
-        {
-          method: "POST",
+      // Toast: در حال ارسال
 
-          headers: {
-            "Content-Type": "application/json"
-          },
-
-          body: JSON.stringify(data)
-        }
+      showToast(
+        "در حال ارسال اطلاعات...",
+        "loading",
+        2000
       );
 
 
+      const response =
+        await fetch(
+          "http://127.0.0.1:8000/search",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json"
+            },
+
+            body:
+              JSON.stringify(data)
+          }
+        );
+
+
+      /* ======================================================
+         CHECK RESPONSE
+      ====================================================== */
+
       if (!response.ok) {
+
+        const errorText =
+          await response.text();
+
+        console.error(
+          "BACKEND ERROR:",
+          errorText
+        );
 
         throw new Error(
           `HTTP Error: ${response.status}`
@@ -1325,6 +1370,10 @@ form.addEventListener(
 
       }
 
+
+      /* ======================================================
+         READ SERVER RESPONSE
+      ====================================================== */
 
       const result =
         await response.json();
@@ -1337,7 +1386,21 @@ form.addEventListener(
       console.log(result);
 
 
-      // فعلاً بعد از موفقیت
+      /* ======================================================
+         SUCCESS TOAST
+      ====================================================== */
+
+      showToast(
+        "اطلاعات با موفقیت ارسال شد ✓",
+        "success",
+        3000
+      );
+
+
+      /* ======================================================
+         NEXT STEP
+      ====================================================== */
+
       show("loading");
 
 
@@ -1348,15 +1411,21 @@ form.addEventListener(
         error
       );
 
-      alert(
-        "ارسال اطلاعات با خطا مواجه شد."
+
+      /* ======================================================
+         ERROR TOAST
+      ====================================================== */
+
+      showToast(
+        "ارسال اطلاعات با خطا مواجه شد",
+        "error",
+        4000
       );
 
     }
 
   }
 );
-
 /* ============================================================
    CAROUSEL
 ============================================================ */

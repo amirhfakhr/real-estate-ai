@@ -1207,195 +1207,110 @@ const properties = [
 
 form.addEventListener(
   "submit",
-  function (event) {
+  async function (event) {
 
     event.preventDefault();
 
+    const formData = new FormData(form);
 
-    /*
-       تبدیل اطلاعات فرم به JSON
-    */
-
-    const formData =
-  new FormData(form);
+    const data = Object.fromEntries(
+      formData.entries()
+    );
 
 
-const data =
-  Object.fromEntries(
-    formData.entries()
-  );
+    // تبدیل مقادیر عددی
+
+    data.min_area =
+      data.min_area
+        ? Number(data.min_area)
+        : null;
+
+    data.max_area =
+      data.max_area
+        ? Number(data.max_area)
+        : null;
+
+    data.min_budget =
+      data.min_budget
+        ? Number(data.min_budget)
+        : null;
+
+    data.max_budget =
+      data.max_budget
+        ? Number(data.max_budget)
+        : null;
 
 
-// تبدیل مقادیر عددی
-data.min_area =
-  data.min_area
-    ? Number(data.min_area)
-    : null;
+    // تبدیل requirements به آرایه
 
-data.max_area =
-  data.max_area
-    ? Number(data.max_area)
-    : null;
-
-data.min_budget =
-  data.min_budget
-    ? Number(data.min_budget)
-    : null;
-
-data.max_budget =
-  data.max_budget
-    ? Number(data.max_budget)
-    : null;
+    data.requirements =
+      data.requirements
+        ? data.requirements
+            .split("،")
+            .map(item => item.trim())
+            .filter(Boolean)
+        : [];
 
 
-// تبدیل requirements به آرایه
-data.requirements =
-  data.requirements
-    ? data.requirements
-        .split("،")
-        .map(item => item.trim())
-        .filter(Boolean)
-    : [];
+    console.log("SENDING DATA:");
+    console.log(data);
 
 
-// تبدیل Object به JSON
-const jsonData =
-  JSON.stringify(
-    data,
-    null,
-    2
-  );
+    try {
 
+      const response = await fetch(
+        "http://127.0.0.1:8000/search",
+        {
+          method: "POST",
 
-console.log("FORM OBJECT:");
-console.log(data);
+          headers: {
+            "Content-Type": "application/json"
+          },
 
-console.log("JSON DATA:");
-console.log(jsonData);
-
-
-    /*
-       فعلاً دمو:
-
-       بعداً این قسمت تبدیل می‌شود به:
-
-       fetch("http://localhost:8000/search", {
-         method: "POST",
-         headers: {
-           "Content-Type": "application/json"
-         },
-         body: JSON.stringify(data)
-       })
-    */
-
-
-    show("loading");
-
-
-    let progress = 0;
-
-    let messageIndex = 0;
-
-
-    const messages = [
-
-      "در حال بررسی فایل‌های موجود...",
-
-      "در حال مقایسه گزینه‌ها با نیاز شما...",
-
-      "در حال رتبه‌بندی بهترین ملک‌ها...",
-
-      "در حال آماده‌سازی نتیجه..."
-
-    ];
-
-
-    const timer =
-      setInterval(
-        function () {
-
-          progress =
-            Math.min(
-              100,
-              progress +
-              Math.floor(
-                Math.random() * 12
-              ) + 7
-            );
-
-
-          $("#bar")
-            .style
-            .width =
-            progress + "%";
-
-
-          $("#pct")
-            .textContent =
-            progress + "%";
-
-
-          $("#stage")
-            .textContent =
-            progress < 100
-              ? "در حال پردازش..."
-              : "نتایج آماده شد";
-
-
-          const index =
-            Math.min(
-              3,
-              Math.floor(
-                progress / 27
-              )
-            );
-
-
-          if (
-            index !==
-            messageIndex
-          ) {
-
-            messageIndex =
-              index;
-
-            $("#msg")
-              .textContent =
-              messages[index];
-
-          }
-
-
-          if (
-            progress === 100
-          ) {
-
-            clearInterval(timer);
-
-
-            setTimeout(
-              function () {
-
-                renderResults();
-
-                show(
-                  "results"
-                );
-
-              },
-              650
-            );
-
-          }
-
-        },
-        500
+          body: JSON.stringify(data)
+        }
       );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          `HTTP Error: ${response.status}`
+        );
+
+      }
+
+
+      const result =
+        await response.json();
+
+
+      console.log(
+        "SERVER RESPONSE:"
+      );
+
+      console.log(result);
+
+
+      // فعلاً بعد از موفقیت
+      show("loading");
+
+
+    } catch (error) {
+
+      console.error(
+        "Request failed:",
+        error
+      );
+
+      alert(
+        "ارسال اطلاعات با خطا مواجه شد."
+      );
+
+    }
 
   }
 );
-
-
 
 /* ============================================================
    CAROUSEL

@@ -49,30 +49,247 @@
 </section>
 
 <section id="results" class="view results">
-  <header class="results-head"><div><span>نتیجه جستجو</span><h1>گزینه‌های مناسب شما</h1><p><b>۱۲</b> ملک بر اساس معیارهای شما پیدا شد.</p></div><button id="newSearch">جستجوی جدید</button></header>
+
+  <!-- Header -->
+  <header class="results-head">
+    <div>
+      <span>نتیجه جستجو</span>
+      <h1>گزینه‌های مناسب شما</h1>
+      <p>
+        <b id="resultCount">۱۲</b>
+        ملک بر اساس معیارهای شما پیدا شد.
+      </p>
+    </div>
+
+    <button id="newSearch" type="button">
+      جستجوی جدید
+    </button>
+  </header>
+
+
   <main class="results-main">
-    <div class="section-head"><div><small>پیشنهاد اول</small><h2>بیشترین تطابق با نیاز شما</h2></div><strong class="score">92<small>/100</small></strong></div>
+
+    <!-- Featured Result -->
+    <div class="section-head">
+      <div>
+        <small>پیشنهاد اول</small>
+        <h2>بیشترین تطابق با نیاز شما</h2>
+      </div>
+
+      <strong class="score">
+        <span id="featuredScore">92</span>
+        <small>/100</small>
+      </strong>
+    </div>
+
 
     <article class="featured">
+
+      <!-- Property Images -->
       <div class="photo" id="featuredPhoto">
-        <img id="featuredImg" alt="تصویر ملک">
-        <button class="nav prev">‹</button><button class="nav next">›</button>
-        <span class="counter" id="featuredCounter"></span><b class="match">92٪ تطابق</b>
+
+        <img
+          id="featuredImg"
+          src=""
+          alt="تصویر ملک پیشنهادی"
+        >
+
+        <button
+          type="button"
+          class="nav prev"
+          aria-label="تصویر قبلی"
+        >
+          ‹
+        </button>
+
+        <button
+          type="button"
+          class="nav next"
+          aria-label="تصویر بعدی"
+        >
+          ›
+        </button>
+
+        <span
+          class="counter"
+          id="featuredCounter"
+        ></span>
+
+        <b
+          class="match"
+          id="featuredMatch"
+        >
+          92٪ تطابق
+        </b>
+
       </div>
+
+
+      <!-- Property Information -->
       <div class="featured-body">
-        <small>آگهی نمونه · به‌روزرسانی امروز</small>
-        <h3>آپارتمان مدرن ۱۲۵ متری در الهیه</h3><p>تهران · الهیه</p>
-        <div class="stats"><div><b>۱۵</b><small>میلیارد تومان</small></div><div><b>۱۲۵</b><small>متر</small></div><div><b>۳</b><small>سال ساخت</small></div><div><b>۲</b><small>خواب</small></div></div>
-        <div class="scores"><div>تطابق موقعیت <b>95%</b><i><em style="width:95%"></em></i></div><div>تطابق بودجه <b>90%</b><i><em style="width:90%"></em></i></div><div>تطابق متراژ <b>96%</b><i><em style="width:96%"></em></i></div></div>
-        <div class="summary"><b>چرا پیشنهاد شده؟</b><p>این گزینه از نظر موقعیت، متراژ و بودجه بیشترین تطابق را با نیاز شما دارد و قیمت هر متر آن در محدوده قابل‌قبولی قرار گرفته است.</p></div>
-        <div class="pros"><b>✓ مزایا</b> موقعیت عالی · پارکینگ · آسانسور · نورگیر خوب<br><b>! نکته</b> سن بنا کمی بیشتر از گزینه دوم است.</div>
-        <a href="#" class="link">مشاهده آگهی اصلی ↗</a>
+
+        <small id="featuredMeta">
+          آگهی نمونه · به‌روزرسانی امروز
+        </small>
+
+        <h3 id="featuredTitle">
+          آپارتمان مدرن ۱۲۵ متری در الهیه
+        </h3>
+
+        <p id="featuredLocation">
+          تهران · الهیه
+        </p>
+
+
+        <!-- Main Stats -->
+        <div class="stats">
+
+          <div>
+            <b id="featuredPrice">۱۵</b>
+            <small>میلیارد تومان</small>
+          </div>
+
+          <div>
+            <b id="featuredArea">۱۲۵</b>
+            <small>متر</small>
+          </div>
+
+          <div>
+            <b id="featuredAge">۳</b>
+            <small>سال ساخت</small>
+          </div>
+
+          <div>
+            <b id="featuredRooms">۲</b>
+            <small>خواب</small>
+          </div>
+
+        </div>
+
+
+        <!-- Match Scores -->
+        <div class="scores">
+
+          <div>
+            <span>
+              تطابق موقعیت
+              <b id="locationScore">95%</b>
+            </span>
+
+            <i>
+              <em
+                id="locationBar"
+                style="width:95%"
+              ></em>
+            </i>
+          </div>
+
+
+          <div>
+            <span>
+              تطابق بودجه
+              <b id="budgetScore">90%</b>
+            </span>
+
+            <i>
+              <em
+                id="budgetBar"
+                style="width:90%"
+              ></em>
+            </i>
+          </div>
+
+
+          <div>
+            <span>
+              تطابق متراژ
+              <b id="areaScore">96%</b>
+            </span>
+
+            <i>
+              <em
+                id="areaBar"
+                style="width:96%"
+              ></em>
+            </i>
+          </div>
+
+        </div>
+
+
+        <!-- AI Explanation -->
+        <div class="summary">
+
+          <b>چرا این ملک پیشنهاد شده؟</b>
+
+          <p id="featuredSummary">
+            این گزینه از نظر موقعیت، متراژ و بودجه بیشترین
+            تطابق را با نیاز شما دارد و قیمت هر متر آن
+            در محدوده قابل‌قبولی قرار گرفته است.
+          </p>
+
+        </div>
+
+
+        <!-- Pros / Cons -->
+        <div class="pros" id="featuredPros">
+
+          <div>
+            <b>✓ مزایا</b>
+            <span>
+              موقعیت عالی · پارکینگ · آسانسور · نورگیر خوب
+            </span>
+          </div>
+
+          <div>
+            <b>! نکته</b>
+            <span>
+              سن بنا کمی بیشتر از گزینه دوم است.
+            </span>
+          </div>
+
+        </div>
+
+
+        <!-- Original Listing -->
+        <a
+          href="#"
+          id="featuredLink"
+          class="link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          مشاهده آگهی اصلی ↗
+        </a>
+
       </div>
+
     </article>
 
-    <div class="section-head lower"><div><small>مقایسه</small><h2>گزینه‌های برتر</h2></div><span>بر اساس امتیاز تطابق</span></div>
-    <div id="cards" class="cards"></div>
+
+    <!-- Other Results -->
+    <div class="section-head lower">
+
+      <div>
+        <small>مقایسه</small>
+        <h2>گزینه‌های برتر</h2>
+      </div>
+
+      <span>
+        بر اساس امتیاز تطابق
+      </span>
+
+    </div>
+
+
+    <!-- Cards are generated by JavaScript -->
+    <div
+      id="cards"
+      class="cards"
+    ></div>
+
   </main>
+
 </section>
 
 <script>
@@ -109,6 +326,44 @@ const cities = {
   "همدان": ["همدان","ملایر","نهاوند","تویسرکان","کبودرآهنگ","اسدآباد","رزن","بهار","فامنین"],
   "یزد": ["یزد","میبد","اردکان","بافق","مهریز","ابرکوه","تفت","اشکذر","خاتم","هرات","مروست"]
 };
+  const provinceSelect = $("#province");
+const citySelect = $("#city");
+
+// ساخت لیست تمام استان‌ها
+Object.keys(cities).forEach(province => {
+  provinceSelect.insertAdjacentHTML(
+    "beforeend",
+    `<option value="${province}">${province}</option>`
+  );
+});
+
+// تغییر استان → بروزرسانی شهرها
+provinceSelect.addEventListener("change", e => {
+  const province = e.target.value;
+
+  citySelect.innerHTML = "";
+
+  if (!province) {
+    citySelect.disabled = true;
+    citySelect.innerHTML =
+      `<option value="">ابتدا استان را انتخاب کنید</option>`;
+    return;
+  }
+
+  citySelect.disabled = false;
+
+  citySelect.insertAdjacentHTML(
+    "beforeend",
+    `<option value="">انتخاب شهر</option>`
+  );
+
+  cities[province].forEach(city => {
+    citySelect.insertAdjacentHTML(
+      "beforeend",
+      `<option value="${city}">${city}</option>`
+    );
+  });
+});
 const properties=[
 {score:88,title:"آپارتمان ۱۱۸ متری نوساز",loc:"تهران · زعفرانیه",price:"۱۴.۲ میلیارد",area:"۱۱۸",age:"۱ سال",rooms:"۲ خواب",images:["https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1200&q=85"]},
 {score:84,title:"آپارتمان ۱۳۰ متری لوکس",loc:"تهران · ولنجک",price:"۱۵ میلیارد",area:"۱۳۰",age:"۴ سال",rooms:"۳ خواب",images:["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85","https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85"]},

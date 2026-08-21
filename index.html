@@ -1217,19 +1217,61 @@ form.addEventListener(
     */
 
     const formData =
-      new FormData(form);
+  new FormData(form);
 
 
-    const data =
-      Object.fromEntries(
-        formData.entries()
-      );
+const data =
+  Object.fromEntries(
+    formData.entries()
+  );
 
 
-    console.log(
-      "SEARCH JSON:",
-      data
-    );
+// تبدیل مقادیر عددی
+data.min_area =
+  data.min_area
+    ? Number(data.min_area)
+    : null;
+
+data.max_area =
+  data.max_area
+    ? Number(data.max_area)
+    : null;
+
+data.min_budget =
+  data.min_budget
+    ? Number(data.min_budget)
+    : null;
+
+data.max_budget =
+  data.max_budget
+    ? Number(data.max_budget)
+    : null;
+
+
+// تبدیل requirements به آرایه
+data.requirements =
+  data.requirements
+    ? data.requirements
+        .split("،")
+        .map(item => item.trim())
+        .filter(Boolean)
+    : [];
+
+
+// تبدیل Object به JSON
+const jsonData =
+  JSON.stringify(
+    data,
+    null,
+    2
+  );
+
+
+console.log("FORM OBJECT:");
+console.log(data);
+
+console.log("JSON DATA:");
+console.log(jsonData);
 
 
     /*

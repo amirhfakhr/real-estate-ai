@@ -1,4 +1,3 @@
-```html
 <!doctype html>
 <html lang="fa" dir="rtl">
 
@@ -10,12 +9,21 @@
 
   <link rel="stylesheet" href="style.css">
 </head>
+
+<body>
+
+
 <!-- =========================================================
      TOAST
 ========================================================= -->
 
-<div id="toast" class="toast"></div>
-<body>
+<div
+  id="toast"
+  class="toast"
+  role="status"
+  aria-live="polite"
+></div>
+
 
 <!-- =========================================================
      SEARCH
@@ -33,7 +41,9 @@
       <span>جستجوی ملک</span>
 
       <h1>
-        <b>با ملک ایده‌آل خود فقط چند لحظه فاصله دارید</b>
+        <b>
+          با ملک ایده‌آل خود فقط چند لحظه فاصله دارید
+        </b>
       </h1>
 
       <p>
@@ -66,6 +76,7 @@
 
 
         <!-- نام -->
+
         <label>
           نام و نام خانوادگی *
 
@@ -76,10 +87,12 @@
             autocomplete="name"
             required
           >
+
         </label>
 
 
         <!-- تلفن -->
+
         <label>
           شماره تماس *
 
@@ -91,14 +104,14 @@
             autocomplete="tel"
             required
           >
+
         </label>
 
 
-        <!-- =================================================
-             PROVINCE
-        ================================================== -->
+        <!-- استان -->
 
         <label>
+
           استان *
 
           <select
@@ -116,11 +129,10 @@
         </label>
 
 
-        <!-- =================================================
-             CITY
-        ================================================== -->
+        <!-- شهر -->
 
         <label>
+
           شهر *
 
           <select
@@ -140,6 +152,7 @@
 
 
         <!-- محله -->
+
         <label class="full">
 
           منطقه یا محله موردنظر
@@ -154,6 +167,7 @@
 
 
         <!-- هدف -->
+
         <label>
 
           هدف خرید
@@ -178,6 +192,7 @@
 
 
         <!-- نوع ملک -->
+
         <div>
 
           <span class="label">
@@ -222,6 +237,7 @@
 
 
         <!-- متراژ -->
+
         <label>
 
           متراژ موردنظر
@@ -252,6 +268,7 @@
 
 
         <!-- بودجه -->
+
         <label>
 
           بودجه (تومان)
@@ -282,6 +299,7 @@
 
 
         <!-- امکانات -->
+
         <label class="full">
 
           نیازها و امکانات مهم
@@ -297,14 +315,19 @@
       </div>
 
 
+      <!-- SUBMIT BUTTON -->
+
       <button
         type="submit"
         class="primary"
+        id="submitButton"
       >
 
-        پیدا کردن ملک مناسب
+        <span id="submitText">
+          پیدا کردن ملک مناسب
+        </span>
 
-        <b>
+        <b id="submitArrow">
           ←
         </b>
 
@@ -376,9 +399,6 @@
 ========================================================= -->
 
 <section id="results" class="view results">
-
-
-  <!-- HEADER -->
 
   <header class="results-head">
 
@@ -461,8 +481,6 @@
     <article class="featured">
 
 
-      <!-- IMAGE -->
-
       <div
         class="photo"
         id="featuredPhoto"
@@ -510,10 +528,7 @@
 
 
 
-      <!-- PROPERTY INFO -->
-
       <div class="featured-body">
-
 
         <small id="featuredMeta">
           آگهی نمونه · به‌روزرسانی امروز
@@ -530,11 +545,9 @@
         </p>
 
 
-
         <!-- STATS -->
 
         <div class="stats">
-
 
           <div>
 
@@ -594,7 +607,6 @@
         <!-- MATCH SCORES -->
 
         <div class="scores">
-
 
           <div>
 
@@ -806,21 +818,15 @@ const provinceSelect = $("#province");
 const citySelect = $("#city");
 const form = $("#form");
 
+const submitButton = $("#submitButton");
+const submitText = $("#submitText");
+const submitArrow = $("#submitArrow");
+
 
 
 /* ============================================================
    IRAN CITIES DATA
-   31 PROVINCES + CITIES
 ============================================================ */
-
-/*
-   این فایل JSON شامل استان‌ها و شهرهای ایران است.
-
-   مزیت این روش:
-   - لازم نیست ۱۶۰۰+ شهر را داخل HTML بنویسیم.
-   - همه شهرها در Select قرار می‌گیرند.
-   - بعداً به‌راحتی می‌توانی دیتاست را به دیتابیس خودت منتقل کنی.
-*/
 
 const CITIES_URL =
   "https://gist.githubusercontent.com/samanzamani/7ab3046ae1f94348d852bde959349f92/raw/gistfile1.txt";
@@ -828,7 +834,7 @@ const CITIES_URL =
 
 
 /* ============================================================
-   LOAD PROVINCES + CITIES
+   LOAD CITIES
 ============================================================ */
 
 let cities = {};
@@ -840,13 +846,20 @@ async function loadIranCities() {
   try {
 
     const response =
-      await fetch(CITIES_URL, {
-        cache: "no-cache"
-      });
+      await fetch(
+        CITIES_URL,
+        {
+          cache: "no-cache"
+        }
+      );
 
 
     if (!response.ok) {
-      throw new Error("خطا در دریافت لیست شهرها");
+
+      throw new Error(
+        "خطا در دریافت لیست شهرها"
+      );
+
     }
 
 
@@ -854,38 +867,21 @@ async function loadIranCities() {
       await response.json();
 
 
-    /*
-       تبدیل ساختار:
+    data.forEach(
+      item => {
 
-       [
-         {
-           province: "تهران",
-           cities: [...]
-         }
-       ]
+        if (
+          item.province &&
+          Array.isArray(item.cities)
+        ) {
 
-       به:
+          cities[item.province] =
+            item.cities;
 
-       {
-         تهران: [...],
-         فارس: [...],
-         ...
-       }
-    */
-
-    data.forEach(item => {
-
-      if (
-        item.province &&
-        Array.isArray(item.cities)
-      ) {
-
-        cities[item.province] =
-          item.cities;
+        }
 
       }
-
-    });
+    );
 
 
     populateProvinces();
@@ -904,6 +900,7 @@ async function loadIranCities() {
         خطا در دریافت استان‌ها
       </option>
     `;
+
 
     citySelect.innerHTML = `
       <option value="">
@@ -930,39 +927,44 @@ function populateProvinces() {
   `;
 
 
-  /*
-     مرتب‌سازی الفبایی استان‌ها
-  */
-
   const provinces =
     Object.keys(cities)
-      .sort((a, b) =>
-        a.localeCompare(
-          b,
-          "fa"
-        )
+      .sort(
+        (a, b) =>
+          a.localeCompare(
+            b,
+            "fa"
+          )
       );
 
 
-  provinces.forEach(province => {
+  provinces.forEach(
+    province => {
 
-    const option =
-      document.createElement("option");
+      const option =
+        document.createElement(
+          "option"
+        );
 
-    option.value =
-      province;
 
-    option.textContent =
-      province;
+      option.value =
+        province;
 
-    provinceSelect.appendChild(
-      option
-    );
 
-  });
+      option.textContent =
+        province;
+
+
+      provinceSelect.appendChild(
+        option
+      );
+
+    }
+  );
 
 
   citySelect.disabled = true;
+
 
   citySelect.innerHTML = `
     <option value="">
@@ -991,7 +993,9 @@ provinceSelect.addEventListener(
 
     if (!province) {
 
-      citySelect.disabled = true;
+      citySelect.disabled =
+        true;
+
 
       citySelect.innerHTML = `
         <option value="">
@@ -1008,7 +1012,8 @@ provinceSelect.addEventListener(
       cities[province] || [];
 
 
-    citySelect.disabled = false;
+    citySelect.disabled =
+      false;
 
 
     citySelect.innerHTML = `
@@ -1019,28 +1024,36 @@ provinceSelect.addEventListener(
 
 
     provinceCities
-      .sort((a, b) =>
-        a.localeCompare(
-          b,
-          "fa"
-        )
+      .sort(
+        (a, b) =>
+          a.localeCompare(
+            b,
+            "fa"
+          )
       )
-      .forEach(city => {
+      .forEach(
+        city => {
 
-        const option =
-          document.createElement("option");
+          const option =
+            document.createElement(
+              "option"
+            );
 
-        option.value =
-          city;
 
-        option.textContent =
-          city;
+          option.value =
+            city;
 
-        citySelect.appendChild(
-          option
-        );
 
-      });
+          option.textContent =
+            city;
+
+
+          citySelect.appendChild(
+            option
+          );
+
+        }
+      );
 
   }
 );
@@ -1063,13 +1076,15 @@ function show(id) {
 
   document
     .querySelectorAll(".view")
-    .forEach(view => {
+    .forEach(
+      view => {
 
-      view.classList.remove(
-        "active"
-      );
+        view.classList.remove(
+          "active"
+        );
 
-    });
+      }
+    );
 
 
   const target =
@@ -1204,11 +1219,14 @@ const properties = [
 ];
 
 
-/* =========================================================
-   TOAST
-========================================================= */
 
-let toastTimer;
+/* ============================================================
+   TOAST
+============================================================ */
+
+let toastTimer = null;
+
+
 
 function showToast(
   message,
@@ -1220,18 +1238,45 @@ function showToast(
     $("#toast");
 
 
-  clearTimeout(
-    toastTimer
-  );
+  if (!toast) {
+    return;
+  }
 
+
+  /*
+     اگر Toast قبلی هنوز در حال نمایش است،
+     تایمر قبلی را متوقف می‌کنیم.
+  */
+
+  if (toastTimer) {
+
+    clearTimeout(
+      toastTimer
+    );
+
+  }
+
+
+  /*
+     متن Toast
+  */
 
   toast.textContent =
     message;
 
 
+  /*
+     کلاس قبلی را کاملاً پاک می‌کنیم
+     و کلاس جدید را اضافه می‌کنیم.
+  */
+
   toast.className =
     `toast ${type} show`;
 
+
+  /*
+     بعد از مدت مشخص Toast محو می‌شود.
+  */
 
   toastTimer =
     setTimeout(
@@ -1246,6 +1291,9 @@ function showToast(
     );
 
 }
+
+
+
 /* ============================================================
    FORM SUBMIT
 ============================================================ */
@@ -1254,7 +1302,25 @@ form.addEventListener(
   "submit",
   async function (event) {
 
+    /*
+       جلوگیری از Reload شدن صفحه
+    */
+
     event.preventDefault();
+
+
+    /*
+       جلوگیری از ارسال چندباره
+       در حالی که درخواست قبلی هنوز تمام نشده.
+    */
+
+    if (
+      submitButton.disabled
+    ) {
+
+      return;
+
+    }
 
 
     /* ========================================================
@@ -1264,10 +1330,12 @@ form.addEventListener(
     const formData =
       new FormData(form);
 
+
     const data =
       Object.fromEntries(
         formData.entries()
       );
+
 
 
     /* ========================================================
@@ -1276,23 +1344,35 @@ form.addEventListener(
 
     data.min_area =
       data.min_area
-        ? Number(data.min_area)
+        ? Number(
+            data.min_area
+          )
         : null;
+
 
     data.max_area =
       data.max_area
-        ? Number(data.max_area)
+        ? Number(
+            data.max_area
+          )
         : null;
+
 
     data.min_budget =
       data.min_budget
-        ? Number(data.min_budget)
+        ? Number(
+            data.min_budget
+          )
         : null;
+
 
     data.max_budget =
       data.max_budget
-        ? Number(data.max_budget)
+        ? Number(
+            data.max_budget
+          )
         : null;
+
 
 
     /* ========================================================
@@ -1303,9 +1383,13 @@ form.addEventListener(
       data.requirements
         ? data.requirements
             .split("،")
-            .map(item => item.trim())
+            .map(
+              item =>
+                item.trim()
+            )
             .filter(Boolean)
         : [];
+
 
 
     /* ========================================================
@@ -1316,7 +1400,39 @@ form.addEventListener(
       "SENDING DATA:"
     );
 
-    console.log(data);
+    console.log(
+      data
+    );
+
+
+
+    /* ========================================================
+       LOCK BUTTON
+    ======================================================== */
+
+    submitButton.disabled =
+      true;
+
+
+    submitText.textContent =
+      "در حال ارسال...";
+
+
+    submitArrow.textContent =
+      "…";
+
+
+
+    /* ========================================================
+       TOAST: SENDING
+    ======================================================== */
+
+    showToast(
+      "در حال ارسال اطلاعات...",
+      "loading",
+      0
+    );
+
 
 
     /* ========================================================
@@ -1325,15 +1441,6 @@ form.addEventListener(
 
     try {
 
-      // Toast: در حال ارسال
-
-      showToast(
-        "در حال ارسال اطلاعات...",
-        "loading",
-        2000
-      );
-
-
       const response =
         await fetch(
           "http://127.0.0.1:8000/search",
@@ -1341,13 +1448,17 @@ form.addEventListener(
             method: "POST",
 
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type":
+                "application/json"
             },
 
             body:
-              JSON.stringify(data)
+              JSON.stringify(
+                data
+              )
           }
         );
+
 
 
       /* ======================================================
@@ -1359,16 +1470,19 @@ form.addEventListener(
         const errorText =
           await response.text();
 
+
         console.error(
           "BACKEND ERROR:",
           errorText
         );
+
 
         throw new Error(
           `HTTP Error: ${response.status}`
         );
 
       }
+
 
 
       /* ======================================================
@@ -1383,7 +1497,10 @@ form.addEventListener(
         "SERVER RESPONSE:"
       );
 
-      console.log(result);
+      console.log(
+        result
+      );
+
 
 
       /* ======================================================
@@ -1397,11 +1514,36 @@ form.addEventListener(
       );
 
 
+
+      /* ======================================================
+         BUTTON BACK TO NORMAL
+      ====================================================== */
+
+      submitButton.disabled =
+        false;
+
+
+      submitText.textContent =
+        "پیدا کردن ملک مناسب";
+
+
+      submitArrow.textContent =
+        "←";
+
+
+
       /* ======================================================
          NEXT STEP
       ====================================================== */
 
-      show("loading");
+      /*
+         فعلاً بعد از دریافت پاسخ موفق
+         صفحه Loading نمایش داده می‌شود.
+      */
+
+      show(
+        "loading"
+      );
 
 
     } catch (error) {
@@ -1410,6 +1552,7 @@ form.addEventListener(
         "Request failed:",
         error
       );
+
 
 
       /* ======================================================
@@ -1422,10 +1565,30 @@ form.addEventListener(
         4000
       );
 
+
+
+      /* ======================================================
+         BUTTON BACK TO NORMAL
+      ====================================================== */
+
+      submitButton.disabled =
+        false;
+
+
+      submitText.textContent =
+        "پیدا کردن ملک مناسب";
+
+
+      submitArrow.textContent =
+        "←";
+
     }
 
   }
 );
+
+
+
 /* ============================================================
    CAROUSEL
 ============================================================ */
@@ -1484,6 +1647,7 @@ function carousel(
   }
 
 
+
   const prev =
     container.querySelector(
       ".prev"
@@ -1494,6 +1658,7 @@ function carousel(
     container.querySelector(
       ".next"
     );
+
 
 
   if (prev) {
@@ -1517,6 +1682,7 @@ function carousel(
   }
 
 
+
   if (next) {
 
     next.onclick =
@@ -1537,9 +1703,8 @@ function carousel(
   }
 
 
-  /*
-     Swipe موبایل
-  */
+
+  /* Swipe موبایل */
 
   let startX = 0;
 
@@ -1627,7 +1792,6 @@ function carousel(
 
 function renderResults() {
 
-
   const featuredImages = [
 
     "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=90",
@@ -1694,7 +1858,11 @@ function renderResults() {
                 ${property.images
                   .map(
                     (_, i) =>
-                      `<i class="${i === 0 ? "on" : ""}"></i>`
+                      `<i class="${
+                        i === 0
+                          ? "on"
+                          : ""
+                      }"></i>`
                   )
                   .join("")
                 }
@@ -1750,9 +1918,7 @@ function renderResults() {
 
 
 
-  /*
-     فعال کردن carousel کارت‌ها
-  */
+  /* فعال کردن carousel کارت‌ها */
 
   document
     .querySelectorAll(
@@ -1810,4 +1976,3 @@ $("#newSearch")
 
 </body>
 </html>
-```
